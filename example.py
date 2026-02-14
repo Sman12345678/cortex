@@ -23,14 +23,14 @@ def webhook():
 
         def echo(sender_id, msg_type, content, message_id):
             if msg_type == "text":
-                # If user wants to post
+                
                 if content.startswith("/post"):
                     post(content)
-                # React and echo
+                
                 fb.react(sender_id, "😁", message_id)
                 fb.sendMsg(psid=sender_id, text=f"You sent: {content}", msg_type="text")
             else:
-                # Media message
+                
                 fb.sendMsg(psid=sender_id, text=None, msg_type=msg_type, media_url=content)
                 fb.sendMsg(psid=sender_id, text=f"You sent a {msg_type}: {content}", msg_type="text")
 
