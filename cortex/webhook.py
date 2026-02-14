@@ -1,6 +1,6 @@
 from flask import request 
 
-def challenge(verify_token: str):
+def challenge(self, verify_token: str):
     mode = request.args.get("hub.mode")
     token = request.args.get("hub.verify_token")
     challenge = request.args.get("hub.challenge")
@@ -8,7 +8,7 @@ def challenge(verify_token: str):
         return challenge, 200
     return "Verification failed", 403
     
-def event(handler = None, q = None|str):
+def event(self, handler = None, q = None|str):
     data = q.json
     for entry in data.get("entry", []):
         for messaging_event in entry.get("messaging", []):
