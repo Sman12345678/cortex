@@ -17,7 +17,7 @@ def event(handler = None, q:str):
             message_id = message.get("mid")
             if "text" in message:
                 if handler:
-                    handler(sender_id, "text", message["text"])
+                    handler(sender_id, "text", message["text"], message_id)
             elif "attachments" in message:
                 for att in message["attachments"]:
                     att_type = att.get("type")
