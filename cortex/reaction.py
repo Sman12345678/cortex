@@ -1,10 +1,16 @@
 import requests
 
 def react(self, psid: str, emoji: str, message_id: str):
+    """
+    React to a user's message.
+    """
+
     if not psid:
         raise ValueError("psid is required")
+
     if not message_id:
         raise ValueError("message_id is required")
+
     if not emoji:
         raise ValueError("emoji is required")
 
@@ -12,14 +18,14 @@ def react(self, psid: str, emoji: str, message_id: str):
 
     payload = {
         "recipient": {"id": psid},
+        "messaging_type": "RESPONSE",
         "message": {
             "reaction": {
-                "mid": message_id,
                 "action": "react",
+                "mid": message_id,
                 "reaction": emoji
             }
-        },
-        "messaging_type": "RESPONSE"
+        }
     }
 
     r = requests.post(
@@ -28,5 +34,11 @@ def react(self, psid: str, emoji: str, message_id: str):
         json=payload
     )
 
-    r.raise_for_status()
+    # Debug output (remove in production)
+    print("React status:", r.status_code)
+    print("React response:", r.text)
+
+    if not r.ok:
+        raise Exception(f"React failed: {r.text}")
+
     return r.json()
