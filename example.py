@@ -15,8 +15,9 @@ def webhook():
     if request.method == "GET":
         return fb.challenge(VERIFY_TOKEN) 
     elif request.method == "POST":
-        def echo(sender_id, msg_type, content):
+        def echo(sender_id, msg_type, content, message_id):
             if msg_type == "text":
+                fb.react("😁",message_id)
                 fb.sendMsg(psid=sender_id, text=f"You sent: {content}", msg_type="text")
             else:
                 fb.sendMsg(psid=sender_id, text=None, msg_type=msg_type, media_url=content)
