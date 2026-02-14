@@ -9,7 +9,7 @@ def post(self, media_type: str, text: str | None = None,
             raise ValueError("TEXT REQUIRED")
         url = self._url("me/feed")
         payload = {"message": text, **self.auth()}
-        r = requests.post(url, data=payload)
+        r = requests.post(url, json=payload)
         r.raise_for_status()
         return r.json()
     
@@ -18,7 +18,7 @@ def post(self, media_type: str, text: str | None = None,
             raise ValueError("Image post requires media_url")
         url = self._url("me/photos")
         payload = {"url": media_url, "caption": text, **self.auth()}
-        r = requests.post(url, data=payload)
+        r = requests.post(url, json=payload)
         r.raise_for_status()
         return r.json()
     
@@ -27,7 +27,7 @@ def post(self, media_type: str, text: str | None = None,
             raise ValueError("Video post requires media_url")
         url = self._url("me/videos")
         payload = {"file_url": media_url, "title": title, "description": description, **self.auth()}
-        r = requests.post(url, data=payload)
+        r = requests.post(url, json=payload)
         r.raise_for_status()
         return r.json()
     
