@@ -13,7 +13,7 @@ def event(self, handler = None):
     for entry in data.get("entry", []):
         for messaging_event in entry.get("messaging", []):
             sender_id = messaging_event["sender"]["id"]
-            message = messaging_event.get("messages",{})
+            message = messaging_event.get("message",{})
             message_id = message.get("mid")
             if "text" in message:
                 if handler:
