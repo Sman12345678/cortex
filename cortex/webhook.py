@@ -8,7 +8,7 @@ def challenge(verify_token: str):
         return challenge, 200
     return "Verification failed", 403
     
-def event(handler = None, q:str):
+def event(handler = None, q = None|str):
     data = q.json
     for entry in data.get("entry", []):
         for messaging_event in entry.get("messaging", []):
