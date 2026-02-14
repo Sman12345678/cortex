@@ -2,7 +2,7 @@ from .messaging import send_msg
 from .post import post
 from .webhook import challenge as ch
 from .webhook import event as ev
-from reaction import react as re
+from .reaction import react as re
 
 class Client:
     def __init__(self, access_token: str, api_version: str | None = None) -> None: 
