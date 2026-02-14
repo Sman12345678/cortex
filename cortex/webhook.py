@@ -1,9 +1,9 @@
+from flask import request 
 
-
-def challenge(verify_token: str, q: str):
-    mode = q.args.get("hub.mode")
-    token = q.args.get("hub.verify_token")
-    challenge = q.args.get("hub.challenge")
+def challenge(verify_token: str):
+    mode = request.args.get("hub.mode")
+    token = request.args.get("hub.verify_token")
+    challenge = request.args.get("hub.challenge")
     if mode == "subscribe" and token == verify_token:
         return challenge, 200
     return "Verification failed", 403
