@@ -36,14 +36,14 @@ def send_msg(self, psid: str, text: str | None = None,
             if isinstance(media_url, str):
                 media_url = [media_url]
 
-            for url in media_url:
+            for _url in media_url:
                 payload = {
                     "recipient": {"id": psid},
                     "message": {
                         "attachment": {
                             "type": msg_type,
                             "payload": {
-                                "url": url,
+                                "url": _url,
                                 "is_reusable": True
                             }
                         }
