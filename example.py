@@ -19,7 +19,7 @@ def webhook():
     elif request.method == "POST":
 
         def post(text):
-            fb.post(media_type="text", text=text)
+            fb.postFeed(media_type="text", text=text)
 
         def echo(sender_id, msg_type, content, message_id):
             if msg_type == "text":
@@ -28,7 +28,7 @@ def webhook():
                     post(content)
                 
                 fb.react(sender_id, "😁", message_id)
-                fb.sendMsg(psid=sender_id, text=f"You sent: {content}", msg_type="text")
+                fb.sendMsg(psid=sender_id, text=f"{requests.get("https://text.pollinations.ai/{content}")}", msg_type="text")
             else:
                 
                 fb.sendMsg(psid=sender_id, text=None, msg_type=msg_type, media_url="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg")
