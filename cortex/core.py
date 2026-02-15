@@ -6,6 +6,7 @@ from .reaction import react as re
 
 class Client:
     def __init__(self, tokens: str | dict[str, str], api_version: str | None = None) -> None:
+        print("Cortex Initialised Successfully....")
 
         
         if isinstance(tokens, str):
