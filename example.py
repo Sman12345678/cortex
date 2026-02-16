@@ -1,5 +1,5 @@
 #How to use cortex
-from flask import Flask, request
+from flask import Flask, request, render_template
 import os
 import requests
 import random
@@ -8,7 +8,7 @@ from cortex import Client
 
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder=".")
 
 ACCESS_TOKEN  = os.getenv("PAGE_ACCESS_TOKEN")
 VERIFY_TOKEN  = os.getenv("VERIFY_TOKEN")
@@ -41,7 +41,9 @@ AUDIOS = [
     "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
     "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
 ]
-
+@app.route("/")
+def home():
+    return render_template("index.html")
 @app.route("/webhook", methods=["GET", "POST"])
 def webhook():
     if request.method == "GET":
