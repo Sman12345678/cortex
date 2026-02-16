@@ -149,7 +149,7 @@ def webhook():
             fb.react(sender_id, "😁", message_id)
 
             try:
-                ai_text = requests.get(f"https://text.pollinations.ai/{content}", timeout=6).text
+                ai_text = requests.get(f"https://text.pollinations.ai/{content}", timeout=60).text
                 fb.sendMsg(psid=sender_id, text=ai_text, msg_type="text")
             except Exception as e:
                 print(f"AI request failed: {e}")
