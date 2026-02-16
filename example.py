@@ -1,4 +1,4 @@
-# How to Use Cortex
+#How to ise cortex
 from flask import Flask, request
 import os
 import requests
@@ -49,10 +49,10 @@ def webhook():
         def post(text):
             try:
                 fb.postFeed(media_type="text", text=text.strip())
-                return True
+                return True, None
             except Exception as e:
                 print(f"Post failed: {e}")
-                return False
+                return False, str(e)
 
         def echo(sender_id, msg_type, content, message_id):
             if msg_type != "text":
@@ -68,7 +68,7 @@ def webhook():
             if content == "help":
                 help_text = """╭──⦿【 ⚡ BOT COMMANDS 】
 │
-│ 👤 Owner : Suleiman 
+│ 👤 User : Suleiman 
 │ 📧 Email    : cortexinvader@gmail.com
 │ 💬 Social   : facebook.com/cortexinvader
 │
@@ -131,12 +131,16 @@ def webhook():
                     )
                     return
 
-                if post(post_text):
+                success, error_msg = post(post_text)
+                if success:
                     fb.react(sender_id, "🔥", message_id)
                 else:
+                    msg = "Couldn't post right now 😕"
+                    if error_msg:
+                        msg += f"\n({error_msg})"
                     fb.sendMsg(
                         psid=sender_id,
-                        text="Couldn't post right now 😕 Try again or check if I'm still connected",
+                        text=msg,
                         msg_type="text"
                     )
                     fb.react(sender_id, "❌", message_id)
@@ -147,10 +151,11 @@ def webhook():
             try:
                 ai_text = requests.get(f"https://text.pollinations.ai/{content}", timeout=6).text
                 fb.sendMsg(psid=sender_id, text=ai_text, msg_type="text")
-            except:
+            except Exception as e:
+                print(f"AI request failed: {e}")
                 fb.sendMsg(
                     psid=sender_id,
-                    text="AI is sleeping right now 😴",
+                    text=f"AI is sleeping right now 😴 ({str(e)})",
                     msg_type="text"
                 )
 
