@@ -19,17 +19,21 @@ if not ACCESS_TOKEN or not VERIFY_TOKEN:
 fb = Client(ACCESS_TOKEN)
 
 CAT_IMAGES = [
-    "https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg",
-    "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800",
-    "https://images.unsplash.com/photo-1532384818465-6a7a4e6d9e8d?w=800",
-    "https://images.unsplash.com/photo-1548366086-7f1b7610666d?w=800",
+    "https://placekitten.com/800/600",
+    "https://placekitten.com/801/600",
+    "https://placekitten.com/802/600",
+    "https://placekitten.com/803/600",
+    "https://cataas.com/cat",
+    "https://cataas.com/cat/cute",
+    "https://cataas.com/cat/sleepy",
+    "https://cataas.com/cat/playful",
 ]
 
 CAT_VIDEOS = [
-    "https://cdn.pixabay.com/video/2023/07/18/174932-841499_small.mp4",
-    "https://cdn.pixabay.com/video/2024/04/06/208064_tiny.mp4",
-    "https://videos.pexels.com/video-files/31487364/13425379_1440_2560_25fps.mp4",
-    "https://cdn.pixabay.com/video/2023/03/28/156499-1024x576-30fps.mp4",
+    "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
+    "https://samplelib.com/lib/preview/mp4/sample-10s.mp4",
+    "https://filesamples.com/samples/video/mp4/sample_640x360.mp4",
+    "https://filesamples.com/samples/video/mp4/sample_960x400_ocean_with_audio.mp4",
 ]
 
 AUDIOS = [
