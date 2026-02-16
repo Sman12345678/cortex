@@ -8,7 +8,6 @@ def send_msg(self, psid: str, text: str | None = None,
     url = self._url("me/messages")
     results = []
 
-    
     if page_name is None:
         _tokens = {"page1": self.tokens.get("page1")}
     elif page_name == "*":
@@ -16,22 +15,30 @@ def send_msg(self, psid: str, text: str | None = None,
     else:
         t = self.tokens.get(page_name)
         if not t:
-            raise ValueError(f"No token found for page {page_name}")
+            print(f"[ERROR] No token found for page {page_name}")  # debug print
+            return []
         _tokens = {page_name: t}
 
-    
     for name, _token in _tokens.items():
+
         if msg_type == "text":
             if not text:
-                raise ValueError("Text message cannot be empty")
+                print("[ERROR] Text message cannot be empty")
+                continue
+
             payload = {"recipient": {"id": psid}, "message": {"text": text}}
-            r = requests.post(url, params={"access_token": _token}, json=payload)
-            r.raise_for_status()
-            results.append(r.json())
+
+            try:
+                r = requests.post(url, params={"access_token": _token}, json=payload, timeout=20)
+                r.raise_for_status()
+                results.append(r.json())
+            except requests.exceptions.RequestException as e:
+                print(f"[REQUEST ERROR] {e}")
 
         elif msg_type in ("image", "video", "audio", "file"):
             if not media_url:
-                raise ValueError(f"{msg_type} message requires a media_url")
+                print(f"[ERROR] {msg_type} message requires a media_url")
+                continue
 
             if isinstance(media_url, str):
                 media_url = [media_url]
@@ -42,17 +49,19 @@ def send_msg(self, psid: str, text: str | None = None,
                     "message": {
                         "attachment": {
                             "type": msg_type,
-                            "payload": {
-                                "url": _url,
-                                "is_reusable": True
-                            }
+                            "payload": {"url": _url, "is_reusable": True}
                         }
                     }
                 }
-                r = requests.post(url, params={"access_token": _token}, json=payload)
-                r.raise_for_status()
-                results.append(r.json())
+
+                try:
+                    r = requests.post(url, params={"access_token": _token}, json=payload, timeout=20)
+                    r.raise_for_status()
+                    results.append(r.json())
+                except requests.exceptions.RequestException as e:
+                    print(f"[REQUEST ERROR] {e}")
+
         else:
-            raise ValueError(f"Unsupported message type: {msg_type}")
+            print(f"[ERROR] Unsupported message type: {msg_type}")
 
     return results
