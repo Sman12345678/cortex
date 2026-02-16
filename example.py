@@ -86,7 +86,7 @@ def webhook():
                     text=help_text,
                     msg_type="text"
                 )
-                fb.react(sender_id, "⚡", message_id)
+                
                 return
 
             if content == "image":
@@ -96,7 +96,7 @@ def webhook():
                     msg_type="image",
                     media_url=random.choice(CAT_IMAGES)
                 )
-                fb.react(sender_id, "😁", message_id)
+                
                 return
 
             if content == "video":
@@ -106,7 +106,7 @@ def webhook():
                     msg_type="video",
                     media_url=random.choice(CAT_VIDEOS)
                 )
-                fb.react(sender_id, "🎥", message_id)
+                
                 return
 
             if content == "audio":
@@ -116,7 +116,7 @@ def webhook():
                     msg_type="audio",
                     media_url=random.choice(AUDIOS)
                 )
-                fb.react(sender_id, "🎵", message_id)
+                
                 return
 
             if content.startswith("/post"):
@@ -131,7 +131,7 @@ def webhook():
 
                 success, error_msg = post(post_text)
                 if success:
-                    fb.react(sender_id, "🔥", message_id)
+                    return
                 else:
                     msg = "Couldn't post right now 😕"
                     if error_msg:
@@ -141,10 +141,10 @@ def webhook():
                         text=msg,
                         msg_type="text"
                     )
-                    fb.react(sender_id, "❌", message_id)
+                    
                 return
 
-            fb.react(sender_id, "😁", message_id)
+            
 
             try:
                 ai_text = requests.get(f"https://text.pollinations.ai/{content}", timeout=60).text
