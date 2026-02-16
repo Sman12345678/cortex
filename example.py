@@ -1,4 +1,4 @@
-#How to ise cortex
+#How to use cortex
 from flask import Flask, request
 import os
 import requests
@@ -33,11 +33,9 @@ CAT_VIDEOS = [
 ]
 
 AUDIOS = [
-    "https://assets.mixkit.co/sfx/preview/mixkit-cat-purr-837.mp3",
-    "https://assets.mixkit.co/sfx/preview/mixkit-cat-meow-2054.mp3",
-    "https://assets.mixkit.co/music/preview/mixkit-relaxing-beat-01.mp3",
-    "https://assets.mixkit.co/music/preview/mixkit-valley-sunset-118.mp3",
-    "https://assets.mixkit.co/music/preview/mixkit-serene-view-118.mp3",
+    "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+    "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
 ]
 
 @app.route("/webhook", methods=["GET", "POST"])
