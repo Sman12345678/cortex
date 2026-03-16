@@ -8,13 +8,18 @@ import random
 import requests
 
 load_dotenv()
-ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
-VERIFY_TOKEN = os.getenv("VERIFY_TOKEN")
-CEREBRAS_KEY = os.getenv("CEREBRAS_API_KEY")
+missing = []
 
-if not ACCESS_TOKEN or not VERIFY_TOKEN or not CEREBRAS_KEY:
-    raise ValueError("ACCESS_TOKEN, VERIFY_TOKEN, and CEREBRAS_API_KEY are required")
+if not ACCESS_TOKEN:
+    missing.append("ACCESS_TOKEN")
+if not VERIFY_TOKEN:
+    missing.append("VERIFY_TOKEN")
+if not CEREBRAS_KEY:
+    missing.append("CEREBRAS_API_KEY")
 
+if missing:
+    print(f"Missing environment variables: {', '.join(missing)}")
+    
 fb = CortexClient(ACCESS_TOKEN, VERIFY_TOKEN)
 API_URL = "https://api.cerebras.ai/v1/chat/completions"
 HEADERS = {"Authorization": f"Bearer {CEREBRAS_KEY}", "Content-Type": "application/json"}
