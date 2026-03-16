@@ -8,7 +8,9 @@ import random
 import requests
 
 load_dotenv()
-
+ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
+VERIFY_TOKEN = os.getenv("VERIFY_TOKEN")
+CEREBRAS_KEY = os.getenv("CEREBRAS_API_KEY")
 
 if not ACCESS_TOKEN or not VERIFY_TOKEN or not CEREBRAS_KEY:
     raise ValueError("ACCESS_TOKEN, VERIFY_TOKEN, and CEREBRAS_API_KEY are required")
