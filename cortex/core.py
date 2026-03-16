@@ -31,15 +31,19 @@ class Client:
         return {"access_token": token}
 
     def validate(self, page_name: str = "page1"):
-        res = requests.get(
-            self._url("me"),
-            params={**self.auth(page_name), "fields": "id,name,category,followers_count"}
-        )
 
+        token = self.tokens.get(page_name)
+
+        url = self._url("me")
+
+        res = requests.get(url, params={"access_token": token})
         data = res.json()
 
-        for field, value in data.items():
-            print(f"{field}: {{{value}}}")
+        if "error" in data:
+            print(f"error: {data}")
+        else:
+            for field, value in data.items():
+                print(f"{field}: {value}")
 
     sendMsg = send_msg
     postFeed = post
