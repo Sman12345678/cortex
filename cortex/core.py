@@ -1,3 +1,4 @@
+import requests
 from .messaging import send_msg
 from .post import post
 from .webhook import challenge as ch
@@ -8,7 +9,6 @@ class Client:
     def __init__(self, tokens: str | dict[str, str], api_version: str | None = None) -> None:
         print("Cortex Initialised Successfully....")
 
-        
         if isinstance(tokens, str):
             tokens = {"page1": tokens}
 
@@ -19,8 +19,10 @@ class Client:
         self.api_version = api_version if api_version else "v23.0"
         self.base_url = "https://graph.facebook.com"
 
+        self.validate()
+
     def _url(self, endpoint: str) -> str:
-        return f'{self.base_url}/{self.api_version}/{endpoint}'
+        return f"{self.base_url}/{self.api_version}/{endpoint}"
 
     def auth(self, page_name: str = "page1") -> dict:
         token = self.tokens.get(page_name)
@@ -28,9 +30,18 @@ class Client:
             raise ValueError(f"No token found for page {page_name}")
         return {"access_token": token}
 
-    
+    def validate(self, page_name: str = "page1"):
+        res = requests.get(
+            self._url("me"),
+            params={**self.auth(page_name), "fields": "id,name,category,followers_count"}
+        )
+
+        data = res.json()
+
+        for field, value in data.items():
+            print(f"{field}: {{{value}}}")
+
     sendMsg = send_msg
     postFeed = post
     challenge = ch
     event = ev
-    
